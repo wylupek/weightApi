@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import random
 from threading import Thread, Lock
 import RPi.GPIO as GPIO
@@ -6,8 +7,21 @@ import I2C_LCD_driver
 from hx711 import HX711
 import time
 
+origins = [
+    "http://localhost",
+    "http://localhost:8000",
+]
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 current_weight = 0
 
 
