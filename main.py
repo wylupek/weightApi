@@ -22,12 +22,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-current_weight = 0
+current_weight = 0.0
 
 
 @app.get("/weight")
 async def root():
-    # return {"current_weight": round(random.uniform(0, 1000), 3)}  # grams
     return {"current_weight": abs(round(current_weight, 1))}
 
 
@@ -48,7 +47,9 @@ def tare_handle(button_pin, my_hx, my_lcd, my_lock):
 
 
 # x values for mass 227g
-def run_scale(x0: int = 23, x1: int = 395936,
+# 1: x0: int = 23, x1: int = 395936
+# 2: x0: int = 10, x1: int = 393500
+def run_scale(x0: int = 10, x1: int = 393600,
               print_values: bool = False, calibrate: bool = False) -> None:
     GPIO.setmode(GPIO.BCM)
     tare_btn_pin = 26
